@@ -12,7 +12,7 @@
         <tr>
             <!-- Employee data input table -->
             <td>
-                <form onsubmit="event.preventDefault();" autocomplete="off">
+                <form onsubmit="event.preventDefault();onFormSubmit();">
                     <div>
                         <label>
                             First Name
@@ -29,7 +29,7 @@
                         <label>
                             Email Address
                         </label>
-                        <input type="text" name="emailAddress" id="emaiAddress">
+                        <input type="text" name="emailAddress" id="emailAddress">
                     </div>
                     <div>
                         <input type="submit" value="Submit">
