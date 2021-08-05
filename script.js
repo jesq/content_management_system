@@ -34,7 +34,7 @@ function insertNewRecord(data) {
 
     cell4 = newRow.insertCell(3);
     cell4.innerHTML = `<a onClick="onEdit(this)">Edit</a>
-                       <a>Delete</a>`;
+                       <a onClick="onDelete(this)">Delete</a>`;
 }
 
 function resetForm() {
@@ -42,6 +42,15 @@ function resetForm() {
     document.getElementById("lastName").value = "";
     document.getElementById("emailAddress").value = "";
     selectedRow = null;
+}
+
+function onDelete(td) {
+    if (confirm('Employee data will be deleted, are you sure?')) {
+        row = td.parentElement.parentElement;
+        document.getElementById("employeeTable").deleteRow(row.rowIndex);
+        resetForm();
+    }
+   
 }
 
 function onEdit(td) {
