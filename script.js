@@ -1,6 +1,13 @@
+var selectedRow = null
+
 function onFormSubmit() {
     var formData = readFormData();
-    insertNewRecord(formData);
+    if (selectedRow == null) {
+        insertNewRecord(formData);
+    } else {
+        updateRow(formData);
+    }
+    
     resetForm();
 }
 
@@ -26,7 +33,7 @@ function insertNewRecord(data) {
     cell3.innerHTML = data.emailAddress;
 
     cell4 = newRow.insertCell(3);
-    cell4.innerHTML = `<a>Edit</a>
+    cell4.innerHTML = `<a onClick="onEdit(this)">Edit</a>
                        <a>Delete</a>`;
 }
 
@@ -34,4 +41,18 @@ function resetForm() {
     document.getElementById("firstName").value = "";
     document.getElementById("lastName").value = "";
     document.getElementById("emailAddress").value = "";
+    selectedRow = null;
+}
+
+function onEdit(td) {
+    selectedRow = td.parentElement.parentElement;
+    document.getElementById("firstName").value = selectedRow.cells[0].innerHTML;
+    document.getElementById("lastName").value = selectedRow.cells[1].innerHTML;
+    document.getElementById("emailAddress").value = selectedRow.cells[2].innerHTML;
+}
+
+function updateRow(formData) {
+    selectedRow.cells[0].innerHTML = formData.firstName;
+    selectedRow.cells[1].innerHTML = formData.lastName;
+    selectedRow.cells[2].innerHTML = formData.emailAddress;
 }
