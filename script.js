@@ -1,9 +1,10 @@
-function onFormSubmit(){
+function onFormSubmit() {
     var formData = readFormData();
     insertNewRecord(formData);
+    resetForm();
 }
 
-function readFormData(){
+function readFormData() {
     var formData = {};
     formData["firstName"] = document.getElementById("firstName").value;
     formData["lastName"] = document.getElementById("lastName").value;
@@ -27,4 +28,10 @@ function insertNewRecord(data) {
     cell4 = newRow.insertCell(3);
     cell4.innerHTML = `<a>Edit</a>
                        <a>Delete</a>`;
+}
+
+function resetForm() {
+    document.getElementById("firstName").value = "";
+    document.getElementById("lastName").value = "";
+    document.getElementById("emailAddress").value = "";
 }
