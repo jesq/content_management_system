@@ -1,14 +1,15 @@
 var selectedRow = null
 
 function onFormSubmit() {
-    var formData = readFormData();
-    if (selectedRow == null) {
-        insertNewRecord(formData);
-    } else {
-        updateRow(formData);
+    if (validate()) {
+        var formData = readFormData();
+        if (selectedRow == null) { 
+            insertNewRecord(formData);
+        } else {
+            updateRow(formData);
+        }
+        resetForm();
     }
-    
-    resetForm();
 }
 
 function readFormData() {
@@ -20,8 +21,8 @@ function readFormData() {
 }
 
 function insertNewRecord(data) {
-    var table = document.getElementById("employeeTable").getElementsByTagName('tbody')[0];
-    var newRow = table.insertRow(table.length);
+    let table = document.getElementById("employeeTable").getElementsByTagName('tbody')[0];
+    let newRow = table.insertRow(table.length);
 
     cell1 = newRow.insertCell(0);
     cell1.innerHTML = data.firstName;
@@ -35,6 +36,7 @@ function insertNewRecord(data) {
     cell4 = newRow.insertCell(3);
     cell4.innerHTML = `<a onClick="onEdit(this)">Edit</a>
                        <a onClick="onDelete(this)">Delete</a>`;
+    localStorage.setItem(data.firstName + data.lastName, JSON.stringify(data));
 }
 
 function resetForm() {
@@ -65,3 +67,27 @@ function updateRow(formData) {
     selectedRow.cells[1].innerHTML = formData.lastName;
     selectedRow.cells[2].innerHTML = formData.emailAddress;
 }
+
+function validate() {
+    isValid = true;
+    if (document.getElementById("firstName").value == "") {
+        isValid = false;
+        document.getElementById("firstNameValidationError").classList.remove("hide");
+    } else {
+        isValid = true;
+        if (!document.getElementById("firstNameValidationError").classList.contains("hide")) {
+            !document.getElementById("firstNameValidationError").classList.add("hide");
+        }
+    }
+    return isValid;
+}
+
+
+const data = JSON.parse(localStorage.getItem('employees'));
+
+const liMaker = (text) => {
+    const li = document.createElement('li');
+    li.textContent = text;
+    ul.appendChild(li);
+}
+
